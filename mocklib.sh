@@ -13,7 +13,7 @@
 # Configuration
 # ============================================================================
 
-MOCKLIB_API_URL="${MOCKLIB_API_URL:-https://api.mockfactory.io/v1}"
+MOCKLIB_API_URL="${MOCKLIB_API_URL:-https://mockfactory.io/api/v1}"
 
 # Accept either MOCKLIB_API_KEY or legacy MOCKFACTORY_API_KEY
 if [ -n "$MOCKLIB_API_KEY" ]; then
@@ -57,7 +57,7 @@ mocklib_request() {
     local url="${MOCKLIB_API_URL}${endpoint}"
 
     curl -s -X "${method}" \
-        -H "Authorization: Bearer ${_MOCKLIB_KEY}" \
+        -H "X-API-Key: ${_MOCKLIB_KEY}" \
         -H "Content-Type: application/json" \
         -H "User-Agent: mocklib-shell/1.0.0" \
         ${data:+-d "$data"} \
@@ -73,7 +73,7 @@ mocklib_request_form() {
     local url="${MOCKLIB_API_URL}${endpoint}"
 
     curl -s -X "${method}" \
-        -H "Authorization: Bearer ${_MOCKLIB_KEY}" \
+        -H "X-API-Key: ${_MOCKLIB_KEY}" \
         -H "Content-Type: application/x-www-form-urlencoded" \
         -H "User-Agent: mocklib-shell/1.0.0" \
         ${data:+--data-urlencode "$data"} \
@@ -89,7 +89,7 @@ mocklib_request_form_raw() {
     local url="${MOCKLIB_API_URL}${endpoint}"
 
     curl -s -X "${method}" \
-        -H "Authorization: Bearer ${_MOCKLIB_KEY}" \
+        -H "X-API-Key: ${_MOCKLIB_KEY}" \
         -H "Content-Type: application/x-www-form-urlencoded" \
         -H "User-Agent: mocklib-shell/1.0.0" \
         ${data:+-d "$data"} \
@@ -106,7 +106,7 @@ mocklib_request_target() {
     local url="${MOCKLIB_API_URL}${endpoint}"
 
     curl -s -X "${method}" \
-        -H "Authorization: Bearer ${_MOCKLIB_KEY}" \
+        -H "X-API-Key: ${_MOCKLIB_KEY}" \
         -H "Content-Type: application/json" \
         -H "X-Amz-Target: ${target}" \
         -H "User-Agent: mocklib-shell/1.0.0" \
@@ -765,7 +765,7 @@ mocklib_oci_put_object() {
     local url="${MOCKLIB_API_URL}/n/${namespace}/b/${bucket}/o/${object}"
 
     curl -s -X PUT \
-        -H "Authorization: Bearer ${_MOCKLIB_KEY}" \
+        -H "X-API-Key: ${_MOCKLIB_KEY}" \
         -H "User-Agent: mocklib-shell/1.0.0" \
         --data-binary "@${file}" \
         "$url"
@@ -1229,7 +1229,7 @@ Usage:
 Environment Variables:
   MOCKLIB_API_KEY        API key (preferred)
   MOCKFACTORY_API_KEY    API key (legacy alias)
-  MOCKLIB_API_URL        Base URL (default: https://api.mockfactory.io/v1)
+  MOCKLIB_API_URL        Base URL (default: https://mockfactory.io/api/v1)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 STS  (POST /sts/)
